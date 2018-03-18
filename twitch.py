@@ -19,8 +19,8 @@ if sys.version_info[0] == 3:
 log = logging.getLogger("chat")
 logging.basicConfig(level=logging.INFO)
 
-master_message_list = []
 
+master_message_list = []
 class IRCClient(pytwitcherapi.IRCClient):
     """This client will print out private and public messages"""
     def on_pubmsg(self, connection, event):
@@ -28,10 +28,16 @@ class IRCClient(pytwitcherapi.IRCClient):
         message = self.messages.get()
         log.info('%s: %s' % (message.source.nickname, message.text))
         master_message_list.append(message.text)
+
     def on_privmsg(self, connection, event):
         super(IRCClient, self).on_pubmsg(connection, event)
         message = self.messages.get()
         log.info('%s: %s' % (message.source.nickname, message.text))
+
+def print_data(interval):
+    label = "messages_"+str(interval)+"min_into_game"
+    for messages in master_message_list:
+        open(label, 'a').write("%s\n" % messages)
 
 
 def authorize(session):
@@ -52,7 +58,9 @@ def main():
     session = pytwitcherapi.TwitchSession()
     authorize(session)
     client = create_client(session)
-
+    threading.Timer(60, print_data, ["1"]).start()
+    threading.Timer(300, print_data, ["5"]).start()
+    threading.Timer(600, print_data, ["10"]).start()
     t = threading.Thread(target=client.process_forever)
     t.start()
 
