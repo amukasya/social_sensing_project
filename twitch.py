@@ -68,9 +68,9 @@ def main():
 			if control == "n":
 				match += 1
 				master_message_list = []
-				threading.Timer(60, print_data, ["1",match]).start()
-				threading.Timer(120, print_data, ["2",match]).start()
 				threading.Timer(180, print_data, ["3",match]).start()
+				threading.Timer(480, print_data, ["8",match]).start()
+				threading.Timer(720, print_data, ["12",match]).start()
 				try:
 					m = client.messages.get(block=False)
 				except queue.Empty as e:
