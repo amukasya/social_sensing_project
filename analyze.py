@@ -59,14 +59,14 @@ def analyze(team1, team2):
 	'''
 	chat_count = 1
 	for chats in master_chat:
-		for message in chat:
+		for message in chats:
 			split = message.lower().split()
-			pos_key_exists = set(split) & set(pos_keys)
-			neg_key_exists = set(split) & set(neg_keys)
-			pos_emote_exists = set(split) & set(pos_emote_keys)
-			neg_emote_exists = set(split) & set(neg_emote_keys)
-			team1_player = set(split) & set(teams[team1])
-			team2_player = set(split) & set(teams[team2])
+			pos_key_exists = set(split).intersect(pos_keys)
+			neg_key_exists = set(split).intersect(neg_keys)
+			pos_emote_exists = set(split).intersect(pos_emote_keys)
+			neg_emote_exists = set(split).intersect(neg_emote_keys)
+			team1_player = set(split).intersect(teams[str(team1)])
+			team2_player = set(split).intersect(teams[str(team2)])
 
 			if (bool(pos_key_exists) or bool(pos_emote_keys)) is True and bool(team1_player) is True:
 				team1_count += 1
