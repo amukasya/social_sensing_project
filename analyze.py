@@ -7,7 +7,7 @@ neg_emote_key = []
 pos_emote_keys = []
 chat1 = []
 chat2 = []
-caht3 = []
+chat3 = []
 master_chat = []
 ##SETS UP DICTIONARY WITH TEAM NAMES AND MEMBERS FOR SENTIMENT ANALYSIS
 teams = dict()
@@ -52,10 +52,10 @@ def load_chats(file1, file2, file3):
 
 def analyze(team1, team2):
 	'''
-	takes the messages in split list format for each chat and compares it to sets of keys.
-		if the comparison is empty the value of the var will be False
-		if comparisons to pos and neg keys return we check that there is a player and team to attach the point to
-		if there is then we add of subtract a point toward that teams prediction
+	takes the messages in split list format for each chat and finds intersections with the keys
+	if the comparison is empty the value of the var will be False
+	if comparisons to pos and neg keys return we check that there is a player from a valid team to attach the point to
+	if there is then we add or subtract a point toward that teams prediction
 	'''
 	chat_count = 1
 	for chats in master_chat:
